@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Photo Viewer</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <script src="scripts/app.js"></script>
+  </head>
+  <body>
+    <div id="main">
+      <h1>Photo Viewer</h1>
+    </div>
+
+    <script>
+      if (document.addEventListener) {
+        document.addEventListener("DOMContentLoaded", function() {
+          app.init();
+        }, false);
+      } else if (document.attachEvent) {
+        // IE8 or below
+        document.attachEvent("onreadystatechange", function() {
+          if (document.readyState === "complete") {
+            app.init();
+          };
+        });
+      }
+    </script>
+  </body>
+</html>
