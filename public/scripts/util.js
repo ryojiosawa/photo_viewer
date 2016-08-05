@@ -1,8 +1,8 @@
 "use strict";
 
-var utils = {};
+var util = {};
 
-utils.extend = function(target, source) {
+util.extend = function(target, source) {
 	for (curKey in source) {
 		if (!target[curKey])
 			target[curKey] = source[curKey];

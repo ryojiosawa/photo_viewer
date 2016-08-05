@@ -1,71 +1,88 @@
 "use strict";
 
-var flickrApi = {
-	_baseUrl: "https://www.flickr.com/services/rest",
-	_perPage: 10,
-	_format: "json"
-};
+/**
+ * A simple API stub that provides some basic Flickr APIs.
+ * Flickr API doc: https://www.flickr.com/services/api/
+ */
 
-flickrApi.init = function(apiKey, userId, options) {
-	this._apiKey = apiKey;
-	this._userId = userId;
-	this._options = options;
-};
+var DEFAULT_PER_PAGE = 50;
+var DEFAULT_FORMAT = "json";
+var BASE_URL = "https://www.flickr.com/services/rest";
 
-flickrApi.searchPhotos = function(params, callback) {
-	var searchParams = {
-		api_key: this._apiKey
+var flickrApi = (function() {
+
+	var _apiKey, _userId;
+	var _perPage = DEFAULT_PER_PAGE;
+	var _format = DEFAULT_FORMAT;
+
+	function _init(apiKey, userId) {
+		_apiKey = apiKey;
+		_userId = userId;
 	};
-	searchParams = utils.extend(searchParams, params);
 
-	var url = this._buildUrl("flickr.photos.search", searchParams);
-	this._makeRequest(url, callback);
-};
+	function _searchPhotos(params, callback) {
+		var searchParams = {
+			api_key: _apiKey
+		};
+		searchParams = utils.extend(searchParams, params);
 
-flickrApi.getPhotos = function(photosetId, callback) {
-	var params = {
-		api_key: this._apiKey,
-		user_id: this._userId,
-		photoset_id: photosetId
+		var url = _buildUrl("flickr.photos.search", searchParams);
+		_makeRequest(url, callback);
 	};
-	var url = this._buildUrl("flickr.photosets.getPhotos", params);
 
-	this._makeRequest(url, function(resp) {
-		callback(resp.photoset.photo);
-	});
-};
+	function _getPhotos(photosetId, callback) {
+		var params = {
+			api_key: _apiKey,
+			user_id: _userId,
+			photoset_id: photosetId
+		};
+		var url = _buildUrl("flickr.photosets.getPhotos", params);
 
-flickrApi.getPhotoUrl = function(photo, sizeSuffix) {
-	var url = "https://farm" + photo.farm + ".staticflickr.com";
-	url += "/" + photo.server + "/" + photo.id + "_" + photo.secret;
-	if (sizeSuffix)
-		url += "_" + sizeSuffix;
-	url += ".jpg"
+		_makeRequest(url, function(resp) {
+			callback(resp.photoset.photo);
+		});
+	};
 
-	return url;
-};
+	function _getPhotoUrl(photo, sizeSuffix) {
+		var url = "https://farm" + photo.farm + ".staticflickr.com";
+		url += "/" + photo.server + "/" + photo.id + "_" + photo.secret;
+		if (sizeSuffix)
+			url += "_" + sizeSuffix;
+		url += ".jpg"
 
-flickrApi._makeRequest = function(url, callback) {
-	var xhr = new Xhr();
+		return url;
+	};
 
-	xhr.get(url, function(resp, err) {
-		if (err) throw err;
+	function _makeRequest(url, callback) {
+		var xhr = new Xhr();
 
-		var response = JSON.parse(resp.response);
+		xhr.get(url, function(resp, err) {
+			if (err) throw err;
 
-		if (response.stat === "fail")
-			throw new Error(response.message);
+			var response = JSON.parse(resp.response);
 
-		callback(response);
-	});
-};
+			if (response.stat === "fail")
+				throw new Error(response.message);
 
-flickrApi._buildUrl = function(method, params) {
-	var url = this._baseUrl;
-	url += "/?method=" + method + "&per_page=" + this._perPage + "&format=" + this._format + "&nojsoncallback=1";
-	for (var curParam in params) {
-		url += "&" + curParam + "=" + params[curParam];
-	}
+			callback(response);
+		});
+	};
 
-	return url;
-};
+	function _buildUrl(method, params) {
+		var url = BASE_URL + "/?method=" + method + "&per_page=" + _perPage + "&format=" + _format + "&nojsoncallback=1";
+		for (var curParam in params) {
+			url += "&" + curParam + "=" + params[curParam];
+		}
+
+		return url;
+	};
+
+	// public methods
+	return {
+		init: _init,
+		searchPhotos: _searchPhotos,
+		getPhotos: _getPhotos,
+		getPhotoUrl: _getPhotoUrl
+	};
+
+})();
