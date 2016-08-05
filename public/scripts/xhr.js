@@ -1,12 +1,11 @@
-function Xhr(baseUrl) {
-	this._baseUrl = baseUrl;
+function Xhr() {
 
 	this.get = function(url, callback) {
-		this._makeRequest("GET", this._baseUrl + url, null, callback);
+		this._makeRequest("GET", url, null, callback);
 	};
 
 	this.post = function(url, data, callback) {
-		this._makeRequest("GET", this._baseUrl + url, data, callback);
+		this._makeRequest("GET", url, data, callback);
 	};
 
 	this._makeRequest = function(method, url, data, callback) {
