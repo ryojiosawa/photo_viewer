@@ -1,15 +1,40 @@
 var app = {};
 
 app.init = function() {
-	// initialize flickrApi
 	flickrApi.init(config.API_KEY, config.USER_ID);
 
-	// search photos
-	var params = {
-		text: "San Francisco"
-	};
+	var photosetId = "72157626553199177";
+	this.fetchPhotos(photosetId, this.renderPhotos.bind(this));
+};
 
-	flickrApi.searchPhotos(params, function(resp) {
-		console.log(resp);
-	});
+app.fetchPhotos = function(photosetId, callback) {
+	flickrApi.getPhotos(photosetId, callback);
+};
+
+app.renderPhotos = function(photos) {
+	var photoContainer = document.createElement("div");
+	photoContainer.classList.add("photo-container");
+
+	var photoList = document.createElement("ul");
+	photoList.classList.add("photo-list");
+
+	for (var i = 0; i < photos.length; i++) {
+		photoList.appendChild(this.renderPhotoThumbnail(photos[i]));
+	}
+
+	photoContainer.appendChild(photoList);
+	document.querySelector(".photo-viewer").appendChild(photoContainer);
+};
+
+app.renderPhotoThumbnail = function(photo) {
+	var photoEl = document.createElement("li");
+	photoEl.setAttribute("id", photo.id);
+	photoEl.classList.add("photo-thumbnail");
+
+	var photoImg = document.createElement("img")
+	photoImg.setAttribute("src", flickrApi.getPhotoUrl(photo, "m"));
+	photoImg.setAttribute("alt", photo.title);
+	photoEl.appendChild(photoImg);
+
+	return photoEl;
 };

@@ -1,0 +1,18 @@
+body {
+	background-color: black;
+}
+
+.photo-viewer h1 {
+	text-align: center;
+	color: white;
+}
+
+.photo-list {
+	display: flex;
+	flex-flow: row wrap;
+}
+
+.photo-thumbnail {
+	padding: 10px;
+	margin-top: 10px;
+}
