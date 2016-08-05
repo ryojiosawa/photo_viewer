@@ -1,3 +1,5 @@
+"use strict";
+
 var utils = {};
 
 utils.extend = function(target, source) {

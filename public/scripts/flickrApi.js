@@ -1,3 +1,5 @@
+"use strict";
+
 var flickrApi = {
 	_baseUrl: "https://www.flickr.com/services/rest",
 	_perPage: 10,
@@ -61,7 +63,7 @@ flickrApi._makeRequest = function(url, callback) {
 flickrApi._buildUrl = function(method, params) {
 	var url = this._baseUrl;
 	url += "/?method=" + method + "&per_page=" + this._perPage + "&format=" + this._format + "&nojsoncallback=1";
-	for (curParam in params) {
+	for (var curParam in params) {
 		url += "&" + curParam + "=" + params[curParam];
 	}
 

@@ -1,3 +1,5 @@
+"use strict";
+
 var app = {};
 
 app.init = function() {
@@ -31,10 +33,8 @@ app.renderPhotoThumbnail = function(photo) {
 	photoEl.setAttribute("id", photo.id);
 	photoEl.classList.add("photo-thumbnail");
 
-	var photoImg = document.createElement("img")
-	photoImg.setAttribute("src", flickrApi.getPhotoUrl(photo, "m"));
-	photoImg.setAttribute("alt", photo.title);
-	photoEl.appendChild(photoImg);
+	var photoUrl = flickrApi.getPhotoUrl(photo, "m");
+	photoEl.innerHTML = '<img src="' + photoUrl + '" alt="' + photo.title + '" />';
 
 	return photoEl;
 };

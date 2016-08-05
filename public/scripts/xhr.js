@@ -1,3 +1,5 @@
+"use strict";
+
 function Xhr() {
 
 	this.get = function(url, callback) {
@@ -9,7 +11,7 @@ function Xhr() {
 	};
 
 	this._makeRequest = function(method, url, data, callback) {
-		req = new XMLHttpRequest();
+		var req = new XMLHttpRequest();
 
 		req.open(method, url, true);
 		req.onreadystatechange = function() {
