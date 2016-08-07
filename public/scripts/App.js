@@ -17,11 +17,11 @@ var App = (function() {
 		FlickrApi.init(Config.API_KEY, Config.USER_ID);
 
 		// register event handlers
-		var photoContainer = document.querySelector(".photo-container");
+		var photoContainer = document.querySelector(".search-photo-results");
 		EventUtil.on(photoContainer, "dataChange", _renderPhotos.bind(this));
 		EventUtil.on(photoContainer, "click", function(e) {
 			// use event delegation to avoid attaching this handler to every image
-			if(e.target && e.target.nodeName == "IMG") {
+			if(e.target && e.target.className === "photo-thumbnail") {
 				_showPhoto(e.target.id);
 			}
 		});
@@ -33,6 +33,8 @@ var App = (function() {
 			var searchTerm = e.target.value;
 			_searchPhotos(searchTerm.trim());
 		});
+
+		_fetchPhotos("72157626553199177");
 	};
 
 	/**
@@ -45,7 +47,7 @@ var App = (function() {
 			_photos = resp.photoset.photo;
 
 			EventUtil.trigger(
-				document.querySelector(".photo-container"), "dataChange"
+				document.querySelector(".search-photo-results"), "dataChange"
 			);
 		});
 	};
@@ -60,13 +62,13 @@ var App = (function() {
 			_photos = resp.photos.photo;
 
 			EventUtil.trigger(
-				document.querySelector(".photo-container"), "dataChange"
+				document.querySelector(".search-photo-results"), "dataChange"
 			);
 		})
 	};
 
 	function _renderPhotos() {
-		var photoContainer = document.querySelector(".photo-container");
+		var photoContainer = document.querySelector(".search-photo-results");
 		var photoList = document.createElement("div");
 		photoList.classList.add("photo-list");
 
@@ -91,8 +93,7 @@ var App = (function() {
 		photoEl.setAttribute("id", photo.id);
 		photoEl.classList.add("photo-thumbnail");
 
-		photoEl.innerHTML = _buildImage(photo);
-
+		photoEl.style.backgroundImage = "url(" + FlickrApi.getPhotoUrl(photo, "m") + ")";
 		return photoEl;
 	};
 
@@ -135,7 +136,7 @@ var App = (function() {
 	 * Return a string of HTML img tag from the given photo object.
 	 */
 	function _buildImage(photo) {
-		var photoUrl = FlickrApi.getPhotoUrl(photo, "m");
+		var photoUrl = FlickrApi.getPhotoUrl(photo, "b");
 		var imageTag = '<img src="' + photoUrl + '" id="' + photo.id + '" alt="' + photo.title + '" />';
 
 		return imageTag;

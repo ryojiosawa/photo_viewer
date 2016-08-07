@@ -10,7 +10,7 @@ var Modal = (function() {
 		if (!_isModalOpen()) return;
 
 		var modalContainer = document.querySelector(".modal-lightbox");
-		document.querySelector(".photo-container").removeChild(modalContainer);
+		document.querySelector(".search-photo-results").removeChild(modalContainer);
 	}
 
 	/**
@@ -22,30 +22,35 @@ var Modal = (function() {
 
 		var modal = document.createElement("div");
 		modal.classList.add("modal");
+		var header = document.createElement("div");
+		header.classList.add("modal-header");
+		header.appendChild(_buildCloseLink());
 
-		var modalBody = document.createElement("div");
-		modalBody.classList.add("modal-body");
+		var body = document.createElement("div");
+		body.classList.add("modal-body");
 
 		var modalContent = document.createElement("div");
 		modalContent.classList.add("modal-content");
 		// insert the content
 		modalContent.appendChild(contentProvider.build());
 
-		modalBody.appendChild(_buildCloseButton());
-		modalBody.appendChild(modalContent);
-		modal.appendChild(modalBody);
+		body.appendChild(modalContent);
+		modal.appendChild(header);
+		modal.appendChild(body);
 		modalContainer.appendChild(modal);
-		document.querySelector(".photo-container").appendChild(modalContainer);
+		document.querySelector(".search-photo-results").appendChild(modalContainer);
 	};
 
-	function _buildCloseButton() {
-		var closeBtn = document.createElement("button");
-		closeBtn.classList.add("close-button");
-		EventUtil.on(closeBtn, "click", function() {
+	function _buildCloseLink() {
+		var closeLink = document.createElement("a");
+		closeLink.setAttribute("href", "#0");
+		closeLink.classList.add("modal-close");
+		EventUtil.on(closeLink, "click", function() {
 			_close();
 		}.bind(this));
-		closeBtn.appendChild(document.createTextNode("Close"));
-		return closeBtn;
+
+		closeLink.appendChild(document.createTextNode("Back"));
+		return closeLink;
 	}
 
 	function _isModalOpen() {

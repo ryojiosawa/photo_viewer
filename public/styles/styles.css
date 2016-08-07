@@ -1,9 +1,15 @@
 body {
-	background-color: white;
+	background-color: #f3f5f6;
 }
 
 .photo-viewer {
+	min-width: 800px;
+	max-width: 80%;
 	text-align: center;
+	margin: auto;
+}
+
+.search-photo-results {
 }
 
 .photo-list {
@@ -12,12 +18,17 @@ body {
 }
 
 .photo-thumbnail {
-	padding: 10px;
-	margin-top: 10px;
+	margin: 10px;
+	width: 152px;
+	height: 152px;
 }
 
 .photo-nav a {
 	margin: 5px;
+}
+
+.photo-search-container {
+	margin: 10px;
 }
 
 .search-box {

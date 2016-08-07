@@ -27,6 +27,11 @@
 
 .modal-body {
 	background-color: white;
-	width: 600px;
-	margin: 10px auto;
+	min-width: 600px;
+	margin: auto;
+}
+
+.modal-close {
+	float: left;
+	font-size: 14px;
 }
