@@ -1,8 +1,8 @@
 "use strict";
 
-var util = {};
+var Util = {};
 
-util.extend = function(target, source) {
+Util.extend = function(target, source) {
 	for (curKey in source) {
 		if (!target[curKey])
 			target[curKey] = source[curKey];
@@ -11,7 +11,7 @@ util.extend = function(target, source) {
 	return target;
 };
 
-util.find = function(list, predicate) {
+Util.find = function(list, predicate) {
 	for (var i = 0; i < list.length; i++) {
 		if (predicate(list[i]))
 			return list[i];
@@ -20,7 +20,7 @@ util.find = function(list, predicate) {
 	return undefined;
 };
 
-util.findIndex = function(list, predicate) {
+Util.findIndex = function(list, predicate) {
 	for (var i = 0; i < list.length; i++) {
 		if (predicate(list[i]))
 			return i;

@@ -1,0 +1,4 @@
+Config = {
+	API_KEY: "9325531ec4eae32220bf49c0210a6131",
+	USER_ID: "16947043@N00"
+}

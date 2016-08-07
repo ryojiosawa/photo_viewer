@@ -1,8 +1,8 @@
 "use strict";
 
-var eventUtil = {};
+var EventUtil = {};
 
-eventUtil.on = function(el, type, listener, useCapture) {
+EventUtil.on = function(el, type, listener, useCapture) {
 	if (el.addEventListener) {
 		useCapture = useCapture || false;
 		el.addEventListener(type, listener, useCapture);
@@ -12,7 +12,7 @@ eventUtil.on = function(el, type, listener, useCapture) {
 	}
 };
 
-eventUtil.off = function(el, type, listener, useCapture) {
+EventUtil.off = function(el, type, listener, useCapture) {
 	if (el.removeEventListener) {
 		useCapture = useCapture || false;
 		el.addEventListener(type, listener, useCapture);
@@ -22,7 +22,7 @@ eventUtil.off = function(el, type, listener, useCapture) {
 	}
 };
 
-eventUtil.trigger = function(el, type) {
+EventUtil.trigger = function(el, type) {
 	if (el.dispatchEvent) {
 		var event = new Event(type);
 		el.dispatchEvent(event);

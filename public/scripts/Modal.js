@@ -1,7 +1,7 @@
 /**
  * A simple Modal lightbox component.
  */
-var modal = (function() {
+var Modal = (function() {
 
 	/**
 	 * Close a Modal if it's present.
@@ -41,7 +41,7 @@ var modal = (function() {
 	function _buildCloseButton() {
 		var closeBtn = document.createElement("button");
 		closeBtn.classList.add("close-button");
-		eventUtil.on(closeBtn, "click", function() {
+		EventUtil.on(closeBtn, "click", function() {
 			_close();
 		}.bind(this));
 		closeBtn.appendChild(document.createTextNode("Close"));

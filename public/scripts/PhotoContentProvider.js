@@ -39,7 +39,7 @@ function PhotoContentProvider(photoId, title, imageTag, onNavPhotoHandler, prevD
 		prev.classList.add("prev-photo");
 		if (prevDisabled) prev.classList.add("disabled");
 		prev.innerHTML = "Previous";
-		eventUtil.on(prev, "click", function(event) {
+		EventUtil.on(prev, "click", function(event) {
 			onNavPhotoHandler(false, this._photoId);
 		}.bind(this));
 
@@ -47,7 +47,7 @@ function PhotoContentProvider(photoId, title, imageTag, onNavPhotoHandler, prevD
 		next.classList.add("next-photo");
 		if (nextDisabled) next.classList.add("disabled");
 		next.innerHTML = "Next";
-		eventUtil.on(next, "click", function(event) {
+		EventUtil.on(next, "click", function(event) {
 			onNavPhotoHandler(true, this._photoId);
 		}.bind(this));
 

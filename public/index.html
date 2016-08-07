@@ -5,14 +5,14 @@
     <title>Photo Viewer</title>
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/modal.css">
-     <script src="scripts/app.js" defer></script>
-     <script src="scripts/xhr.js" defer></script>
-     <script src="scripts/config.js" defer></script>
-     <script src="scripts/flickrApi.js" defer></script>
-     <script src="scripts/util.js" defer></script>
-     <script src="scripts/eventUtil.js" defer></script>
-     <script src="scripts/modal.js" defer></script>
+     <script src="scripts/App.js" defer></script>
+     <script src="scripts/Config.js" defer></script>
+     <script src="scripts/FlickrApi.js" defer></script>
+     <script src="scripts/Modal.js" defer></script>
      <script src="scripts/PhotoContentProvider.js" defer></script>
+     <script src="scripts/util/Xhr.js" defer></script>
+     <script src="scripts/util/Util.js" defer></script>
+     <script src="scripts/util/EventUtil.js" defer></script>
   </head>
   <body>
     <div class="photo-viewer">
@@ -23,13 +23,13 @@
     <script>
       if (document.addEventListener) {
         document.addEventListener("DOMContentLoaded", function() {
-          app.init();
+          App.init();
         }, false);
       } else if (document.attachEvent) {
         // IE8 or below
         document.attachEvent("onreadystatechange", function() {
           if (document.readyState === "complete") {
-            app.init();
+            App.init();
           };
         });
       }

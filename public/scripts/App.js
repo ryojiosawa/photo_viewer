@@ -4,22 +4,22 @@
  * Main app module
  */
 
-var app = (function() {
+var App = (function() {
 
 	// private variable that stores a list of photos to be shown
 	var _photos = [];
 
 	/**
-	 * Initialization includes initializing flickrApi stub, registering event handlers,
+	 * Initialization includes initializing FlickrApi stub, registering event handlers,
 	 * and fetching and rendering photos
 	 */
 	function _init() {
-		flickrApi.init(config.API_KEY, config.USER_ID);
+		FlickrApi.init(Config.API_KEY, Config.USER_ID);
 
 		// register event handlers
 		var photoContainer = document.querySelector(".photo-container");
-		eventUtil.on(photoContainer, "dataChange", _renderPhotos.bind(this));
-		eventUtil.on(photoContainer, "click", function(e) {
+		EventUtil.on(photoContainer, "dataChange", _renderPhotos.bind(this));
+		EventUtil.on(photoContainer, "click", function(e) {
 			// use event delegation to avoid attaching this handler to every image
 			if(e.target && e.target.nodeName == "IMG") {
 				_showPhoto(e.target.id);
@@ -35,11 +35,11 @@ var app = (function() {
 	 * "dataChange" event is dispatched to notify app to render a view.
 	 */
 	function _fetchPhotos(photosetId) {
-		flickrApi.getPhotos(photosetId, function(photos) {
+		FlickrApi.getPhotos(photosetId, function(photos) {
 			// update photos and re-render view
 			_photos = photos;
 
-			eventUtil.trigger(
+			EventUtil.trigger(
 				document.querySelector(".photo-container"),
 				"dataChange"
 			);
@@ -80,14 +80,14 @@ var app = (function() {
 	 */
 	function _showPhoto(photoId) {
 		var photo = _getPhotoById(photoId);
-		modal.open(
+		Modal.open(
 			new PhotoContentProvider(photo.id, photo.title, _buildImage(photo), _boundOnPhotoNavHandler)
 		);
 	};
 
 	function _onPhotoNavHandler(isNext, photoId) {
 		var newIndex;
-		var selectedIndex = util.findIndex(_photos, function(curPhoto) {
+		var selectedIndex = Util.findIndex(_photos, function(curPhoto) {
 			return curPhoto.id === photoId;
 		});
 
@@ -103,7 +103,7 @@ var app = (function() {
 		}
 
 		var newPhoto = _photos[newIndex];
-		modal.open(
+		Modal.open(
 			new PhotoContentProvider(newPhoto.id, newPhoto.title, _buildImage(newPhoto), _boundOnPhotoNavHandler)
 		);
 	};
@@ -114,14 +114,14 @@ var app = (function() {
 	 * Return a string of HTML img tag from the given photo object.
 	 */
 	function _buildImage(photo) {
-		var photoUrl = flickrApi.getPhotoUrl(photo, "m");
+		var photoUrl = FlickrApi.getPhotoUrl(photo, "m");
 		var imageTag = '<img src="' + photoUrl + '" id="' + photo.id + '" alt="' + photo.title + '" />';
 
 		return imageTag;
 	};
 
 	function _getPhotoById(id) {
-		return util.find(_photos, function(curPhoto) {
+		return Util.find(_photos, function(curPhoto) {
 			return curPhoto.id === id;
 		});
 	};

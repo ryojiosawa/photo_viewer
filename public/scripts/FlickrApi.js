@@ -9,7 +9,7 @@ var DEFAULT_PER_PAGE = 50;
 var DEFAULT_FORMAT = "json";
 var BASE_URL = "https://www.flickr.com/services/rest";
 
-var flickrApi = (function() {
+var FlickrApi = (function() {
 
 	var _apiKey, _userId;
 	var _perPage = DEFAULT_PER_PAGE;
@@ -24,7 +24,7 @@ var flickrApi = (function() {
 		var searchParams = {
 			api_key: _apiKey
 		};
-		searchParams = utils.extend(searchParams, params);
+		searchParams = Util.extend(searchParams, params);
 
 		var url = _buildUrl("flickr.photos.search", searchParams);
 		_makeRequest(url, callback);

@@ -1,4 +1,0 @@
-config = {
-	API_KEY: "574e4358b4e0a28e1d218d0b77e3a3b7",
-	USER_ID: "16947043@N00"
-}
