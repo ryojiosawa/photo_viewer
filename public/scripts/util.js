@@ -10,3 +10,21 @@ util.extend = function(target, source) {
 
 	return target;
 };
+
+util.find = function(list, predicate) {
+	for (var i = 0; i < list.length; i++) {
+		if (predicate(list[i]))
+			return list[i];
+	}
+
+	return undefined;
+};
+
+util.findIndex = function(list, predicate) {
+	for (var i = 0; i < list.length; i++) {
+		if (predicate(list[i]))
+			return i;
+	}
+
+	return -1;
+};

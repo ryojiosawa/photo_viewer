@@ -1,10 +1,9 @@
 body {
-	background-color: black;
+	background-color: white;
 }
 
-.photo-viewer h1 {
+.photo-viewer {
 	text-align: center;
-	color: white;
 }
 
 .photo-list {
@@ -15,4 +14,8 @@ body {
 .photo-thumbnail {
 	padding: 10px;
 	margin-top: 10px;
+}
+
+.photo-nav a {
+	margin: 5px;
 }
