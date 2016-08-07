@@ -25,9 +25,14 @@ var App = (function() {
 				_showPhoto(e.target.id);
 			}
 		});
+		var searchBox = document.querySelector(".search-box");
+		EventUtil.on(searchBox, "keypress", function(e) {
+			if (e.keyCode != 13) // enter key
+				return;
 
-		var photosetId = "72157626553199177";
-		_fetchPhotos(photosetId);
+			var searchTerm = e.target.value;
+			_searchPhotos(searchTerm.trim());
+		});
 	};
 
 	/**
@@ -35,20 +40,34 @@ var App = (function() {
 	 * "dataChange" event is dispatched to notify app to render a view.
 	 */
 	function _fetchPhotos(photosetId) {
-		FlickrApi.getPhotos(photosetId, function(photos) {
+		FlickrApi.getPhotos(photosetId, function(resp) {
 			// update photos and re-render view
-			_photos = photos;
+			_photos = resp.photoset.photo;
 
 			EventUtil.trigger(
-				document.querySelector(".photo-container"),
-				"dataChange"
+				document.querySelector(".photo-container"), "dataChange"
 			);
 		});
 	};
 
+	/**
+	 * Fetch a list of photos that matches the given search term. When photos are fetched,
+	 * "dataChange" event is dispatched to notify app to render a view.
+	 */
+	function _searchPhotos(searchTerm) {
+		FlickrApi.searchPhotos({text: searchTerm}, function(resp) {
+			// update photos and re-render view
+			_photos = resp.photos.photo;
+
+			EventUtil.trigger(
+				document.querySelector(".photo-container"), "dataChange"
+			);
+		})
+	};
+
 	function _renderPhotos() {
 		var photoContainer = document.querySelector(".photo-container");
-		var photoList = document.createElement("ul");
+		var photoList = document.createElement("div");
 		photoList.classList.add("photo-list");
 
 		for (var i = 0; i < _photos.length; i++) {
@@ -57,7 +76,9 @@ var App = (function() {
 			);
 		}
 
-		// TODO - remove existing photos if exit before rendering
+		// delete old photos before rendering
+		var oldPhotos = document.querySelector(".photo-list");
+		if (oldPhotos) photoContainer.removeChild(oldPhotos);
 
 		photoContainer.appendChild(photoList);
 	};
@@ -66,7 +87,7 @@ var App = (function() {
 	 * Render individual photo thumbnail.
 	 */
 	function _renderPhotoThumbnail(photo) {
-		var photoEl = document.createElement("li");
+		var photoEl = document.createElement("div");
 		photoEl.setAttribute("id", photo.id);
 		photoEl.classList.add("photo-thumbnail");
 

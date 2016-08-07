@@ -21,12 +21,10 @@ var FlickrApi = (function() {
 	};
 
 	function _searchPhotos(params, callback) {
-		var searchParams = {
-			api_key: _apiKey
-		};
-		searchParams = Util.extend(searchParams, params);
+		if (!params["api_key"])
+			params["api_key"] = _apiKey;
 
-		var url = _buildUrl("flickr.photos.search", searchParams);
+		var url = _buildUrl("flickr.photos.search", params);
 		_makeRequest(url, callback);
 	};
 
@@ -37,10 +35,7 @@ var FlickrApi = (function() {
 			photoset_id: photosetId
 		};
 		var url = _buildUrl("flickr.photosets.getPhotos", params);
-
-		_makeRequest(url, function(resp) {
-			callback(resp.photoset.photo);
-		});
+		_makeRequest(url, callback);
 	};
 
 	function _getPhotoUrl(photo, sizeSuffix) {

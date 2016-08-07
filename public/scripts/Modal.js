@@ -17,8 +17,8 @@ var Modal = (function() {
 	 * Render a modal lightbox and shows the content provided by the given contentProvider.
 	 */
 	function _render(contentProvider) {
-		var modalLightbox = document.createElement("div");
-		modalLightbox.classList.add("modal-lightbox", "full-page");
+		var modalContainer = document.createElement("div");
+		modalContainer.classList.add("modal-lightbox", "full-page");
 
 		var modal = document.createElement("div");
 		modal.classList.add("modal");
@@ -34,8 +34,8 @@ var Modal = (function() {
 		modalBody.appendChild(_buildCloseButton());
 		modalBody.appendChild(modalContent);
 		modal.appendChild(modalBody);
-		modalLightbox.appendChild(modal);
-		document.querySelector(".photo-container").appendChild(modalLightbox);
+		modalContainer.appendChild(modal);
+		document.querySelector(".photo-container").appendChild(modalContainer);
 	};
 
 	function _buildCloseButton() {
