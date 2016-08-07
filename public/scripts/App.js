@@ -24,7 +24,7 @@ var App = (function() {
 			if(e.target && e.target.className === "photo-thumbnail") {
 				_showPhoto(e.target.id);
 			}
-		});
+		}.bind(this));
 		var searchBox = document.querySelector(".search-box");
 		EventUtil.on(searchBox, "keypress", function(e) {
 			if (e.keyCode != 13) // enter key
@@ -102,13 +102,27 @@ var App = (function() {
 	 */
 	function _showPhoto(photoId) {
 		var photo = _getPhotoById(photoId);
+		var index = _getIndexById(photoId);
+
+		var prevDisabled = index === 0 ? true : false;
+		var nextDisabled = index === (_photos.length - 1) ? true : false;
+
 		Modal.open(
-			new PhotoContentProvider(photo.id, photo.title, _buildImage(photo), _boundOnPhotoNavHandler)
+			new PhotoContentProvider(
+				photo.id,
+				photo.title,
+				_buildImage(photo),
+				_boundOnPhotoNavHandler,
+				prevDisabled,
+				nextDisabled
+			)
 		);
 	};
 
+	/**
+	 * Event handler to call when Next/Previous link is clicked
+	 */
 	function _onPhotoNavHandler(isNext, photoId) {
-		var newIndex;
 		var selectedIndex = Util.findIndex(_photos, function(curPhoto) {
 			return curPhoto.id === photoId;
 		});
@@ -117,16 +131,26 @@ var App = (function() {
 		if (selectedIndex === -1) return;
 
 		if (isNext) {
-			newIndex = selectedIndex + 1;
-			if (newIndex === _photos.length - 1) return;
+			if (selectedIndex === _photos.length - 1) return; // last photo
+			selectedIndex++;
 		} else {
-			if (selectedIndex === 0) return;
-			newIndex = selectedIndex - 1;
+			if (selectedIndex === 0) return; // first photo
+			selectedIndex--;
 		}
 
-		var newPhoto = _photos[newIndex];
+		var newPhoto = _photos[selectedIndex];
+		var prevDisabled = selectedIndex === 0 ? true : false;
+		var nextDisabled = selectedIndex === (_photos.length - 1) ? true : false;
+
 		Modal.open(
-			new PhotoContentProvider(newPhoto.id, newPhoto.title, _buildImage(newPhoto), _boundOnPhotoNavHandler)
+			new PhotoContentProvider(
+				newPhoto.id,
+				newPhoto.title,
+				_buildImage(newPhoto),
+				_boundOnPhotoNavHandler,
+				prevDisabled,
+				nextDisabled
+			)
 		);
 	};
 
@@ -147,6 +171,12 @@ var App = (function() {
 			return curPhoto.id === id;
 		});
 	};
+
+	function _getIndexById(id) {
+		return Util.findIndex(_photos, function(curPhoto) {
+			return curPhoto.id === id;
+		});
+	}
 
 	// public methods
 	return {

@@ -15,18 +15,17 @@
 	z-index: 1000001;
 }
 
-.modal {
-	width: 90%;
+.modal-lightbox .modal {
+	width: 75%;
 	display: flex;
+	background-color: white;
 	flex-direction: column;
 	padding: 2rem;
 	border-radius: .25rem;
-	background-color: white;
-	margin: auto;
+	margin: 28px auto;
 }
 
 .modal-body {
-	background-color: white;
 	min-width: 600px;
 	margin: auto;
 }

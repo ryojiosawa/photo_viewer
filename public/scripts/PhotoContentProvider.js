@@ -10,7 +10,7 @@ function PhotoContentProvider(photoId, title, imageTag, onNavPhotoHandler, prevD
 		var content = document.createElement("div");
 		content.classList.add("photo-content");
 
-		content.appendChild(this._buildNavLinks());
+		content.appendChild(this._buildNav());
 		content.appendChild(this._buildTitle());
 		content.appendChild(this._buildPhotoImage());
 
@@ -31,28 +31,31 @@ function PhotoContentProvider(photoId, title, imageTag, onNavPhotoHandler, prevD
 		return title;
 	};
 
-	this._buildNavLinks = function() {
+	this._buildNav = function() {
 		var nav = document.createElement("div");
 		nav.classList.add("photo-nav");
 
-		var prev = document.createElement("a");
-		prev.classList.add("prev-photo");
-		if (prevDisabled) prev.classList.add("disabled");
-		prev.innerHTML = "Previous";
-		EventUtil.on(prev, "click", function(event) {
-			onNavPhotoHandler(false, this._photoId);
-		}.bind(this));
-
-		var next = document.createElement("a");
-		next.classList.add("next-photo");
-		if (nextDisabled) next.classList.add("disabled");
-		next.innerHTML = "Next";
-		EventUtil.on(next, "click", function(event) {
-			onNavPhotoHandler(true, this._photoId);
-		}.bind(this));
-
-		nav.appendChild(prev);
-		nav.appendChild(next);
+		nav.appendChild(this._buildNavLink(false, prevDisabled));
+		nav.appendChild(this._buildNavLink(true, nextDisabled));
 		return nav;
+	};
+
+	this._buildNavLink = function(isNext, disabled) {
+		var className = isNext ? "next" : "prev";
+		var text = isNext ? "Next >>" : "<< Previous";
+
+		var navDiv = document.createElement("div");
+		navDiv.classList.add(className);
+		var link = document.createElement("a");
+		link.setAttribute("href", "#0");
+		if (disabled) link.classList.add("disabled");
+
+		link.innerHTML = text;
+		EventUtil.on(link, "click", function(event) {
+			onNavPhotoHandler(isNext, this._photoId);
+		}.bind(this));
+
+		navDiv.appendChild(link);
+		return navDiv;
 	};
 }

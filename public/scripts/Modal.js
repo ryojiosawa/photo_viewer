@@ -11,15 +11,28 @@ var Modal = (function() {
 
 		var modalContainer = document.querySelector(".modal-lightbox");
 		document.querySelector(".search-photo-results").removeChild(modalContainer);
+		EventUtil.off(document, "keyup");
 	}
 
 	/**
-	 * Render a modal lightbox and shows the content provided by the given contentProvider.
+	 * Render a modal lightbox.
 	 */
 	function _render(contentProvider) {
 		var modalContainer = document.createElement("div");
 		modalContainer.classList.add("modal-lightbox", "full-page");
 
+		EventUtil.on(document, "keyup", _handleHotKeys.bind(this));
+
+		// render modal
+		modalContainer.appendChild(_renderModal(contentProvider));
+
+		document.querySelector(".search-photo-results").appendChild(modalContainer);
+	};
+
+	/**
+	 *  Render a modal.  Call the provided contentProvider param to produce the modal's content.
+	 */
+	function _renderModal(contentProvider) {
 		var modal = document.createElement("div");
 		modal.classList.add("modal");
 		var header = document.createElement("div");
@@ -37,9 +50,14 @@ var Modal = (function() {
 		body.appendChild(modalContent);
 		modal.appendChild(header);
 		modal.appendChild(body);
-		modalContainer.appendChild(modal);
-		document.querySelector(".search-photo-results").appendChild(modalContainer);
+
+		return modal;
 	};
+
+	function _removeModal() {
+		var modal = document.querySelector(".modal");
+		document.querySelector(".modal-lightbox").removeChild(modal);		
+	}
 
 	function _buildCloseLink() {
 		var closeLink = document.createElement("a");
@@ -57,11 +75,23 @@ var Modal = (function() {
 		return document.querySelector(".modal-lightbox") != null;
 	}
 
+	function _handleHotKeys(e) {
+		if (e.keyCode === 27) { // esc key
+			_close();
+		}
+	};
+
 	return {
 		open: function(contentProvider) {
-			if (_isModalOpen())
-				_close();
+			if (_isModalOpen()) {
+				// if the modal lightbox is already present, let's re-render only the modal element
+				_removeModal();
+				document.querySelector(".modal-lightbox")
+					.appendChild(_renderModal(contentProvider));
+				return;
+			}
 
+			// otherwise, render the whole modal lightbox
 			_render(contentProvider);
 		},
 		close: function() {
