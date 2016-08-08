@@ -23,9 +23,8 @@ EventUtil.off = function(el, type, listener, useCapture) {
 };
 
 EventUtil.trigger = function(el, type) {
-	if (el.dispatchEvent) {
-		var event = new Event(type);
-		el.dispatchEvent(event);
-	}
-	// TODO add support for IE
+	// use createEvent() to support custom event in IE
+	var event = document.createEvent("Event");
+	event.initEvent(type, true, true);
+	el.dispatchEvent(event);
 };
