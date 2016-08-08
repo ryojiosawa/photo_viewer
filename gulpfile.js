@@ -1,5 +1,6 @@
 var gulp = require("gulp");
 var concat = require("gulp-concat");
+var del = require("del");
 
 gulp.task("concat-js", function() {
 	return gulp.src("app/src/**/*.js")
@@ -13,9 +14,15 @@ gulp.task("concat-css", function() {
 		.pipe(gulp.dest("public/styles"));
 });
 
+gulp.task("clean", function() {
+	return del([
+		"public/js",
+		"public/styles"
+	]);
+});
 
 gulp.task("watch", function() {
 	gulp.watch("app/src/**/*.js", ["concat-js", "concat-css"]);
 });
 
-gulp.task("default", ["concat-js", "concat-css"]);
+gulp.task("default", ["clean", "concat-js", "concat-css"]);
