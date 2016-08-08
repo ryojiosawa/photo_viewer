@@ -1,0 +1,66 @@
+body {
+	background-color: #f3f5f6;
+}
+
+.photo-viewer {
+	min-width: 800px;
+	max-width: 80%;
+	text-align: center;
+	margin: auto;
+}
+
+.search-photo-results {
+}
+
+.photo-list {
+	display: flex;
+	flex-flow: row wrap;
+}
+
+.photo-thumbnail {
+	margin: 10px;
+	width: 152px;
+	height: 152px;
+}
+
+.photo-nav a {
+	margin: 5px;
+}
+
+.photo-search-container {
+	margin: 10px;
+}
+
+.search-box {
+	width: 400px;
+	height: 33px;
+	font-size: 14px;
+	padding: 5px;
+}
+
+.photo-nav .prev {
+	float: left;
+}
+
+.photo-nav .next {
+	float: right;
+}
+
+a.disabled {
+	color: gray;
+	opacity: 0.4;
+}
+
+.spinner {
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	margin: -50px 0px 0px -50px;
+	z-index: 9999;
+}
+
+.no-results {
+	font-size: 20px;
+	margin: auto;
+	padding-top: 100px;
+}
