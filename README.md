@@ -8,5 +8,6 @@ A simple web app that shows a grid of photo thumbnails; when a thumbnail is clic
 $ git clone https://github.com/ryojiosawa/photo_viewer.git # or clone your own fork
 $ cd photo_viewer
 $ npm install
+$ run gulp default task (ie., gulp)
 $ npm start
 ```
