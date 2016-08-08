@@ -14,6 +14,8 @@ gulp.task("concat-css", function() {
 		.pipe(gulp.dest("public/styles"));
 });
 
+gulp.task("build", ["concat-js", "concat-css"]);
+
 gulp.task("clean", function() {
 	return del([
 		"public/js",
@@ -22,7 +24,7 @@ gulp.task("clean", function() {
 });
 
 gulp.task("watch", function() {
-	gulp.watch("app/src/**/*.js", ["concat-js", "concat-css"]);
+	gulp.watch("app/src/**/*.js", ["build"]);
 });
 
-gulp.task("default", ["clean", "concat-js", "concat-css"]);
+gulp.task("default", ["clean", "build"]);
