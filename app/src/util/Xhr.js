@@ -1,5 +1,9 @@
 "use strict";
 
+/**
+ * A class that encapuslates XMLHttpRequest.
+ */
+
 function Xhr() {
 
 	this.get = function(url, callback) {

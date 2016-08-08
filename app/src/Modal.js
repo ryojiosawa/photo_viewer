@@ -1,5 +1,7 @@
 /**
- * A simple Modal lightbox component.
+ * Modal lightbox component.  To open a modal, use open() method and pass ContentProvider class
+ * an argument. ContentProvider is used to generate the modal content and append to the modal
+ * content div. See PhotoContentProvider.js for more details.
  */
 var Modal = (function() {
 

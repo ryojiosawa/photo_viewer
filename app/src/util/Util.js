@@ -1,5 +1,9 @@
 "use strict";
 
+/**
+ * A set of util methods.
+ */
+
 var Util = {};
 
 Util.extend = function(target, source) {

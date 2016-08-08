@@ -1,5 +1,9 @@
 "use strict";
 
+/** 
+ * A simple util of attaching and removing even listener, as well as triggering custom event.
+ */
+
 var EventUtil = {};
 
 EventUtil.on = function(el, type, listener, useCapture) {

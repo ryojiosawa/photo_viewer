@@ -1,11 +1,20 @@
 "use strict";
 
+/**
+ * PhotoContentProvider is responsible for producing the photo content in the modal lightbox. This class
+ * has one public method 'build' which is used in the Modal (modal.js) to generate the content and attach
+ * to the document.
+ */
+
 function PhotoContentProvider(photoId, title, imageTag, onNavPhotoHandler, prevDisabled, nextDisabled) {
 	this._photoId = photoId;
 	this._title = title;
 	this._imageTag = imageTag;
 	this._onNavPhotoHandler = onNavPhotoHandler;
 
+	/**
+	 * Build method will generate an HTML content displayed in a modal.
+	 */
 	this.build = function() {
 		var content = document.createElement("div");
 		content.classList.add("photo-content");

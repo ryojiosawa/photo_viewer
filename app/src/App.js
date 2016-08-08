@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * Main app module
+ * Main App module.
  */
 
 var App = (function() {
