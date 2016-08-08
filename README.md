@@ -8,6 +8,10 @@ A simple web app that shows a grid of photo thumbnails; when a thumbnail is clic
 $ git clone https://github.com/ryojiosawa/photo_viewer.git # or clone your own fork
 $ cd photo_viewer
 $ npm install
-$ run gulp default task (ie., gulp)
+$ add your Flickr API key to API_KEY in Config.js (see https://www.flickr.com/services/api/misc.api_keys.html on how to get API key)
+$ run gulp default task (ie., 'gulp default')
 $ npm start
 ```
+
+## Browser Support
+This app should work in most of modern browsers, including IE 9, 10 and 11 (you might see some minor UI issues in IE).

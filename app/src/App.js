@@ -172,7 +172,7 @@ var App = (function() {
 	 * Return a string of HTML img tag from the given photo object.
 	 */
 	function _buildImage(photo) {
-		var photoUrl = FlickrApi.getPhotoUrl(photo, "b");
+		var photoUrl = FlickrApi.getPhotoUrl(photo, "z");
 		var imageTag = '<img src="' + photoUrl + '" id="' + photo.id + '" alt="' + photo.title + '" />';
 
 		return imageTag;
