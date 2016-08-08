@@ -30,11 +30,16 @@ var App = (function() {
 			if (e.keyCode != 13) // enter key
 				return;
 
-			var searchTerm = e.target.value;
-			_searchPhotos(searchTerm.trim());
-		});
+			var searchTerm = e.target.value.trim();
+			if (!searchTerm) return;
 
-		_fetchPhotos("72157626553199177");
+			_searchPhotos(searchTerm);
+		});
+		EventUtil.on(document.body, "request_begin", _showSpinner.bind(this));
+		EventUtil.on(document.body, "request_finish", _hideSpinner.bind(this));
+
+		// for test
+		//_fetchPhotos("72157626553199177");
 	};
 
 	/**
@@ -68,19 +73,26 @@ var App = (function() {
 	};
 
 	function _renderPhotos() {
+		var photoList = document.querySelector(".photo-list");
 		var photoContainer = document.querySelector(".search-photo-results");
-		var photoList = document.createElement("div");
+
+		// delete old photoList before rendering if exists
+		if (photoList)
+			photoContainer.removeChild(photoList);
+
+		photoList = document.createElement("div");
 		photoList.classList.add("photo-list");
+
+		if (_photos.length === 0) {
+			photoList.innerHTML = '<span class="no-results">No matching photos found.</span>';
+			return photoContainer.appendChild(photoList);
+		}
 
 		for (var i = 0; i < _photos.length; i++) {
 			photoList.appendChild(
 				_renderPhotoThumbnail(_photos[i])
 			);
 		}
-
-		// delete old photos before rendering
-		var oldPhotos = document.querySelector(".photo-list");
-		if (oldPhotos) photoContainer.removeChild(oldPhotos);
 
 		photoContainer.appendChild(photoList);
 	};
@@ -176,7 +188,20 @@ var App = (function() {
 		return Util.findIndex(_photos, function(curPhoto) {
 			return curPhoto.id === id;
 		});
-	}
+	};
+
+	function _showSpinner() {
+		var spinner = document.createElement("div");
+		spinner.classList.add("spinner");
+		spinner.innerHTML = '<img src="../images/spinner.gif" />';
+
+		document.body.appendChild(spinner);
+	};
+
+	function _hideSpinner() {
+		var spinner = document.querySelector(".spinner");
+		document.body.removeChild(spinner);
+	};
 
 	// public methods
 	return {

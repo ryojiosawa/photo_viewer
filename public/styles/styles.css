@@ -50,3 +50,17 @@ a.disabled {
 	color: gray;
 	opacity: 0.4;
 }
+
+.spinner {
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	margin: -50px 0px 0px -50px;
+	z-index: 9999;
+}
+
+.no-results {
+	font-size: 20px;
+	margin: auto;
+	padding-top: 100px;
+}

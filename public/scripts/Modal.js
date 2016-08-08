@@ -11,7 +11,7 @@ var Modal = (function() {
 
 		var modalContainer = document.querySelector(".modal-lightbox");
 		document.querySelector(".search-photo-results").removeChild(modalContainer);
-		EventUtil.off(document, "keyup");
+		EventUtil.off(document.body, "keyup");
 	}
 
 	/**
@@ -21,7 +21,7 @@ var Modal = (function() {
 		var modalContainer = document.createElement("div");
 		modalContainer.classList.add("modal-lightbox", "full-page");
 
-		EventUtil.on(document, "keyup", _handleHotKeys.bind(this));
+		EventUtil.on(document.body, "keyup", _handleHotKeys.bind(this));
 
 		// render modal
 		modalContainer.appendChild(_renderModal(contentProvider));

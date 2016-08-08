@@ -51,7 +51,9 @@ var FlickrApi = (function() {
 	function _makeRequest(url, callback) {
 		var xhr = new Xhr();
 
+		EventUtil.trigger(document.body, "request_begin");
 		xhr.get(url, function(resp, err) {
+			EventUtil.trigger(document.body, "request_finish");
 			if (err) throw err;
 
 			var response = JSON.parse(resp.response);
